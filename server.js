@@ -11,7 +11,7 @@ var server = app2.listen(3001, console.log("server is running on port 3001"));
 
 const firebaseConfig = {
   databaseURL:
-    "https://myappwater-b3274-default-rtdb.asia-southeast1.firebasedatabase.app/",
+    "https://store-ba002-e5fd3-default-rtdb.asia-southeast1.firebasedatabase.app",
 };
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
@@ -209,3 +209,42 @@ app2.delete("/api/delete", (req, res) => {
     });
   }
 });
+
+const data = 123
+const dategg = moment().format('LL'); 
+
+//// my appp
+app2.post("/new_Stock", (req, res) => {
+  var Stock = req.body.Stock;
+  var name_Stock = req.body.name_Stock;
+  var date_add_Stock = dategg
+  
+
+  try {
+    //console.log('>>>> fullname', fullname)
+    //console.log('path', 'home/' + /fullname)
+    set(ref(db, "Stock/" + date_add_Stock), {
+      Stock: Stock,
+      name_Stock: name_Stock,
+      Time: moment(timeInMilliseconds).format(),
+      
+      
+    });
+    return res.status(200).json({
+      RespCode: 200,
+      RespMessage: "good",
+      data : data+1,
+    }
+    );
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      RespCode: 500,
+      RespMessage: err.message,
+    });
+  }
+});
+
+
+
+
